@@ -149,11 +149,11 @@ public class DBHelper extends SQLiteOpenHelper {
     //                                  ROOM METHODS
     // =====================================================================================
     private void insertInitialRooms(SQLiteDatabase db) {
-        addRoom(db, "Ocean View Suite", "Stunning panoramic views of the ocean.", "Rs. 57,500 / night", R.drawable.room_image_1, "Suite", 57500);
-        addRoom(db, "Deluxe Room", "Spacious comfort with premium amenities.", "Rs. 46,500 / night", R.drawable.room_image_2, "Deluxe", 46500);
-        addRoom(db, "Executive Pool Villa", "Ultimate privacy with your own personal pool.", "Rs. 73,200 / night", R.drawable.room_image_3, "Villa", 73200);
-        addRoom(db, "Family Suite", "Two-bedroom suite perfect for the whole family.", "Rs. 39,000 / night", R.drawable.room_image_4, "Suite", 39000);
-        addRoom(db, "Honeymoon Penthouse", "The pinnacle of luxury with a private terrace.", "Rs. 96,000 / night", R.drawable.room_image_5, "Penthouse", 96000);
+        addRoom(db, "Ocean View Suite", "Stunning panoramic views of the ocean.", "Rs. 32,500 / night", R.drawable.room_image_1, "Suite", 57500);
+        addRoom(db, "Deluxe Room", "Spacious comfort with premium amenities.", "Rs. 25,000 / night", R.drawable.room_image_2, "Deluxe", 46500);
+        addRoom(db, "Executive Pool Villa", "Ultimate privacy with your own personal pool.", "Rs. 35,200 / night", R.drawable.room_image_3, "Villa", 73200);
+        addRoom(db, "Family Suite", "Two-bedroom suite perfect for the whole family.", "Rs. 26,000 / night", R.drawable.room_image_4, "Suite", 39000);
+        addRoom(db, "Honeymoon Penthouse", "The pinnacle of luxury with a private terrace.", "Rs. 38,000 / night", R.drawable.room_image_5, "Penthouse", 96000);
     }
 
     private void addRoom(SQLiteDatabase db, String name, String desc, String price, int imgId, String type, double numericPrice) {
