@@ -12,8 +12,14 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+/**
+ * The main container Activity that hosts all the primary fragments of the app.
+ * It manages the BottomNavigationView and handles the swapping of fragments
+ * as the user navigates through the app.
+ */
 public class MainActivity extends AppCompatActivity {
 
+    // The BottomNavigationView UI element from the layout.
     private BottomNavigationView bottomNavigationView;
 
     @Override
@@ -21,15 +27,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Link the bottomNavigationView variable to the view in the XML layout.
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        // Set the listener for the navigation bar
+        // Set the listener that will be triggered when a navigation item is selected.
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFragment = null;
 
-                // Using a switch statement is cleaner for multiple items
+                // Determine which fragment to display based on the ID of the selected menu item.
                 int itemId = item.getItemId();
                 if (itemId == R.id.nav_home) {
                     selectedFragment = new HomeFragment();
@@ -39,38 +46,39 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new ServicesFragment();
                 } else if (itemId == R.id.nav_bookings) {
                     selectedFragment = new BookingsFragment();
-
-
                 } else if (itemId == R.id.nav_profile) {
                     selectedFragment = new ProfileFragment();
                 }
 
+                // If a valid fragment has been selected, load it into the container.
                 if (selectedFragment != null) {
                     loadFragment(selectedFragment);
                 }
-                return true; // Return true to display the item as the selected item
+                // Return true to highlight the selected item in the navigation bar.
+                return true;
             }
         });
 
-        // Load the HomeFragment by default when the activity is first created
+        // This ensures that the HomeFragment is loaded as the default screen
+        // when the activity is first created.
         if (savedInstanceState == null) {
-            bottomNavigationView.setSelectedItemId(R.id.nav_home); // This will trigger the listener
+            bottomNavigationView.setSelectedItemId(R.id.nav_home);
         }
     }
 
     /**
-     * Helper method to replace the current fragment in the container.
-     *
-     * @param fragment The fragment to display.
+     * A helper method to handle the replacement of fragments within the FrameLayout container.
+     * @param fragment The fragment to be displayed.
      */
     private void loadFragment(Fragment fragment) {
+        // Get the FragmentManager to handle fragment transactions.
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        // Replace the existing fragment with the new one
+        // Replace the content of the 'fragment_container' with the new fragment.
         fragmentTransaction.replace(R.id.fragment_container, fragment);
 
-        // Commit the transaction
+        // Commit the transaction to apply the changes.
         fragmentTransaction.commit();
     }
 }

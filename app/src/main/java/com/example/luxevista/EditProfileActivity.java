@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.regex.Pattern;
 
+/**
+ * Allows the logged-in user to view and update their profile details.
+ * It pre-fills the form with the user's current data and saves any changes to the database.
+ */
 public class EditProfileActivity extends AppCompatActivity {
 
     private EditText editTextName, editTextContact, editTextEmail, editTextPassword;
@@ -31,10 +33,12 @@ public class EditProfileActivity extends AppCompatActivity {
         saveChangesButton = findViewById(R.id.save_changes_button);
 
         loadUserData();
-
         saveChangesButton.setOnClickListener(v -> saveUserData());
     }
 
+    /**
+     * Loads the current user's data from the database and populates the form fields.
+     */
     private void loadUserData() {
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         originalUserEmail = sharedPreferences.getString("userEmail", null);
@@ -55,19 +59,20 @@ public class EditProfileActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Validates the user's input and saves the updated details to the database.
+     */
     private void saveUserData() {
         String newName = editTextName.getText().toString().trim();
         String newContact = editTextContact.getText().toString().trim();
         String newEmail = editTextEmail.getText().toString().trim();
         String newPassword = editTextPassword.getText().toString().trim();
 
-        // Add validation
         if (newName.isEmpty() || newContact.isEmpty() || newEmail.isEmpty()) {
             Toast.makeText(this, "Name, Contact, and Email cannot be empty.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Validate password only if it's being changed
         if (!newPassword.isEmpty() && !isValidPassword(newPassword)) {
             Toast.makeText(this, "Password must contain at least 3 letters, 3 numbers, and 1 special character", Toast.LENGTH_LONG).show();
             return;
@@ -76,25 +81,25 @@ public class EditProfileActivity extends AppCompatActivity {
         boolean isUpdated = dbHelper.updateUser(originalUserEmail, newName, newContact, newEmail, newPassword);
 
         if (isUpdated) {
-            // Update the email in SharedPreferences if it was changed
             SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("userEmail", newEmail);
+            editor.putString("userEmail", newEmail); // Update session email if it changed
             editor.apply();
 
             Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
-            finish(); // Go back to the profile screen
+            finish();
         } else {
             Toast.makeText(this, "Failed to update profile.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    // Reuse the password validation logic
+    /**
+     * Helper method to validate password complexity.
+     */
     public boolean isValidPassword(String password) {
         Pattern letter = Pattern.compile("[a-zA-Z]");
         Pattern digit = Pattern.compile("[0-9]");
         Pattern special = Pattern.compile("[!@#$%^&*()_+=|<>?{}\\[\\]~-]");
-        // ... (rest of the validation logic)
         java.util.regex.Matcher hasLetter = letter.matcher(password);
         java.util.regex.Matcher hasDigit = digit.matcher(password);
         java.util.regex.Matcher hasSpecial = special.matcher(password);
@@ -102,9 +107,8 @@ public class EditProfileActivity extends AppCompatActivity {
         while(hasLetter.find()) letterCount++;
         int digitCount = 0;
         while(hasDigit.find()) digitCount++;
-        int specialCount = 0;
-        while(hasSpecial.find()) specialCount++;
+        boolean hasSpecialChar = hasSpecial.find();
 
-        return letterCount >= 3 && digitCount >= 3 && specialCount >= 1;
+        return letterCount >= 3 && digitCount >= 3 && hasSpecialChar;
     }
 }

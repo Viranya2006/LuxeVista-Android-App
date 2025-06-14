@@ -1,4 +1,4 @@
-package com.example.luxevista; // Make sure this package name matches yours
+package com.example.luxevista;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,27 +7,33 @@ import android.os.Looper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * The initial splash screen of the application.
+ * This activity displays the app's brand for a short period
+ * before automatically navigating to the LoginActivity.
+ */
 public class SplashActivity extends AppCompatActivity {
+
+    // The duration the splash screen will be visible, in milliseconds.
+    private static final int SPLASH_DELAY = 2000; // 2 seconds
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // This line sets the layout from res/layout/activity_splash.xml
         setContentView(R.layout.activity_splash);
 
-        // We create a Handler to run a task after a specified delay
+        // A Handler is used to schedule a task to be run after a delay.
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                // This code will execute after the delay
-                // Create an Intent to start the next activity (e.g., LoginActivity or MainActivity)
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                // This code will execute after the SPLASH_DELAY has passed.
+                // Create an Intent to start the LoginActivity.
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(intent);
 
-                // Call finish() to close the splash activity so the user can't go back to it
+                // Call finish() to close the SplashActivity so the user cannot go back to it.
                 finish();
             }
-        }, 2000); // The delay is 2000 milliseconds (2 seconds)
+        }, SPLASH_DELAY);
     }
 }

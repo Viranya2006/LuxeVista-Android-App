@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-// Make sure to import the correct SearchView from androidx.appcompat
 import androidx.appcompat.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -18,20 +17,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+/**
+ * The RoomsFragment displays a complete list of all hotel rooms.
+ * It includes UI controls for searching, filtering by room type, and sorting by price,
+ * allowing users to easily find the accommodation that suits their needs.
+ */
 public class RoomsFragment extends Fragment {
 
-    // Declare all UI components and helpers
+    // UI Components
     private RecyclerView roomsRecyclerView;
+    private SearchView searchView;
+    private Spinner filterSpinner, sortSpinner;
+
+    // Data and Helpers
     private RoomAdapter roomAdapter;
     private List<Room> roomList;
     private DBHelper dbHelper;
-    private SearchView searchView;
-    private Spinner filterSpinner, sortSpinner;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate the XML layout for this fragment.
         return inflater.inflate(R.layout.fragment_rooms, container, false);
     }
 
@@ -39,34 +45,35 @@ public class RoomsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Initialize DBHelper and RecyclerView
+        // Initialize the database helper and UI components.
         dbHelper = new DBHelper(getContext());
         roomsRecyclerView = view.findViewById(R.id.rooms_recycler_view);
         roomsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Initialize the new UI controls
         searchView = view.findViewById(R.id.search_view);
         filterSpinner = view.findViewById(R.id.filter_spinner);
         sortSpinner = view.findViewById(R.id.sort_spinner);
 
-        // Setup the spinners with data from arrays.xml
+        // Set up the dropdown menus and their listeners.
         setupSpinners();
-
-        // Setup the listeners for all controls
         setupListeners();
 
-        // Perform an initial load of all rooms
+        // Perform an initial load of the room list.
         updateRoomList();
     }
 
+    /**
+     * Populates the filter and sort Spinners (dropdowns) with data from arrays.xml.
+     */
     private void setupSpinners() {
-        // Create an ArrayAdapter for the filter spinner
+        if (getContext() == null) return;
+        // Set up the adapter for the room type filter.
         ArrayAdapter<CharSequence> filterAdapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.room_types_array, android.R.layout.simple_spinner_item);
         filterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         filterSpinner.setAdapter(filterAdapter);
 
-        // Create an ArrayAdapter for the sort spinner
+        // Set up the adapter for the price sort options.
         ArrayAdapter<CharSequence> sortAdapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.sort_options_array, android.R.layout.simple_spinner_item);
         sortAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -74,29 +81,27 @@ public class RoomsFragment extends Fragment {
     }
 
     /**
-     * This method sets up the listeners for the search bar and spinners.
-     * This is where the fix is.
+     * Attaches listeners to the search, filter, and sort controls.
+     * Any change in these controls will trigger an update of the room list.
      */
     private void setupListeners() {
-        // Listener for the search view that triggers on every text change
+        // Listener for the search bar.
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // This is called when the user presses the search button on the keyboard.
                 updateRoomList();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // This is called every time the user types a character.
                 updateRoomList();
                 return true;
             }
         });
 
-        // Listener for the filter spinner
-        filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        // A single listener for both spinners.
+        AdapterView.OnItemSelectedListener spinnerListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 updateRoomList();
@@ -104,42 +109,31 @@ public class RoomsFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
-        });
-
-        // Listener for the sort spinner
-        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                updateRoomList();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
+        };
+        filterSpinner.setOnItemSelectedListener(spinnerListener);
+        sortSpinner.setOnItemSelectedListener(spinnerListener);
     }
 
     /**
-     * This master method gets the current state of all UI controls,
-     * queries the database, and updates the RecyclerView.
+     * The master update method. It reads the current state of all filter/sort controls,
+     * queries the database for the relevant data, and updates the RecyclerView.
      */
     private void updateRoomList() {
-        if (getContext() == null) return; // Prevents crashes if fragment is detached
+        if (getContext() == null) return; // Ensure fragment is still attached.
 
-        // Get current values from UI controls
+        // Get the current values from the search bar and spinners.
         String searchQuery = searchView.getQuery().toString();
         String roomTypeFilter = filterSpinner.getSelectedItem().toString();
         String sortOrder = sortSpinner.getSelectedItem().toString();
 
-        // Get the filtered and sorted list from the database
+        // Fetch the filtered and sorted list from the database.
         roomList = dbHelper.getFilteredAndSortedRooms(roomTypeFilter, searchQuery, sortOrder);
 
-        // Update the adapter
+        // Update the adapter with the new list.
         if (roomAdapter == null) {
-            // If it's the first time, create a new adapter
             roomAdapter = new RoomAdapter(roomList);
             roomsRecyclerView.setAdapter(roomAdapter);
         } else {
-            // Otherwise, just update the list inside the existing adapter
             roomAdapter.filterList(roomList);
         }
     }
