@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_horizontal"
+    android:background="@color/theme_secondary">
+
+    <TextView
+        android:id="@+id/service_booking_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:text="Reserve Service"
+        android:textSize="34sp"
+        android:textColor="@color/text_primary"/>
+
+    <TextView
+        android:id="@+id/service_booking_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Swedish Massage"
+        android:textSize="22sp"
+        android:textColor="@color/theme_accent"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/select_date_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Date"
+        android:layout_marginTop="32dp"/>
+
+    <Button
+        android:id="@+id/select_time_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Time"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/selected_date_time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date and time not set"
+        android:layout_marginTop="24dp"
+        android:textSize="18sp"
+        android:textColor="@color/text_secondary"/>
+
+    <Button
+        android:id="@+id/confirm_service_booking_button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Confirm Reservation"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/theme_primary"
+        android:layout_marginTop="32dp"
+        android:enabled="false"/>
+</LinearLayout>

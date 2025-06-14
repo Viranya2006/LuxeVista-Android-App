@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- LuxeVista Brand Colors -->
+    <color name="theme_primary">#1a202c</color> <!-- Dark Slate -->
+    <color name="theme_secondary">#f7fafc</color> <!-- Off-white -->
+    <color name="theme_accent">#c09e6c</color>   <!-- Muted Gold -->
+    <color name="text_primary">#1a202c</color>
+    <color name="text_secondary">#718096</color>
+</resources>

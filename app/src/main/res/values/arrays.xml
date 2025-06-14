@@ -1,0 +1,26 @@
+<resources>
+    <string-array name="room_types_array">
+        <item>All Types</item>
+        <item>Suite</item>
+        <item>Deluxe</item>
+        <item>Villa</item>
+        <item>Penthouse</item>
+    </string-array>
+    <string-array name="sort_options_array">
+        <item>Default</item>
+        <item>Price: Low to High</item>
+        <item>Price: High to Low</item>
+    </string-array>
+
+    <string-array name="service_category_array">
+        <item>All Services</item>
+        <item>Spa Treatment</item>
+        <item>Fine Dining</item>
+        <item>Poolside Cabana</item>
+        <item>Guided Beach Tour</item>
+    </string-array>
+    <string-array name="service_sort_array">
+        <item>Default</item>
+        <item>Alphabetical</item>
+    </string-array>
+</resources>
