@@ -6,13 +6,19 @@ This project was developed as a primary assessment for the Mobile Application De
 
 ## **📸 Screenshots**
 
-| Splash & Login | Home Screen | Rooms (with Filter) |
-| :---- | :---- | :---- |
-| *![][image1]* | *![][image2]* | *![][image3]* |
-| **Services (with Search)** | **Booking Details** | **Unified My Bookings** |
-| *![][image4]* | *![][image5]* | *![][image6]* |
-| **Profile Dashboard** | **Edit Profile** | **Nearby Attraction** |
-| *![][image7]* | *![][image8]* | *![][image9]* |
+<img width="1080" height="2412" alt="image" src="https://github.com/user-attachments/assets/c35d9f3f-00aa-44d5-a22f-205107cadd28" />
+
+<img width="1080" height="2412" alt="image" src="https://github.com/user-attachments/assets/bc723c3f-99e5-426c-ae68-bddde8345679" />
+
+<img width="1080" height="2412" alt="image" src="https://github.com/user-attachments/assets/41677dfa-c7be-494f-8d97-6338a6a0e9d2" />
+
+<img width="1080" height="2412" alt="image" src="https://github.com/user-attachments/assets/4e6443f7-5577-48ed-8125-33681d0ed300" />
+
+<img width="1080" height="2412" alt="image" src="https://github.com/user-attachments/assets/9408f8b6-b30c-4b47-9667-6ee6b6a181a7" />
+
+<img width="1080" height="2412" alt="image" src="https://github.com/user-attachments/assets/9bc5a1db-cdc3-4374-8d28-00551245b9e4" />
+
+<img width="1080" height="2412" alt="image" src="https://github.com/user-attachments/assets/b60fdeab-fda2-4d5b-be68-15b02de472de" />
 
 ## **✨ Features**
 
